@@ -20,7 +20,10 @@ for (const text of ["Vivre, c'est faire vivre l'absurde.", 'But Man is not made 
 for (const text of ['라이카', '31세', '조사 1팀', '팀장', '학자', '인물 소개', '신념', '연구청과의 관계', '개인적 장점', '개인적 결함']) assert.ok(profile.includes(text), text);
 assert.doesNotMatch(profile, /지휘 성향|거절하기 어려운 충분한 이유/);
 assert.doesNotMatch(entry + profile, /characters-data|<script|character-switcher|character-arrow|인물 명단|15명|잔향 중계소|미종결 기록/);
-assert.doesNotMatch(profile, /\bhidden\b|href="[^"]*character/);
+assert.doesNotMatch(profile, /\shidden(?:\s|>|=)|href="[^"]*character/);
+for (const id of ['personnel-detail', 'attachments']) {
+  assert.ok(profile.includes('href="#' + id + '"') && profile.includes('id="' + id + '"'));
+}
 assert.equal((profile.match(/<h1\b/g) || []).length, 1);
 assert.equal((profile.match(/<img\b/g) || []).length, 7);
 assert.match(legacy, /http-equiv="refresh" content="0; url=profile.html"/);
