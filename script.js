@@ -37,14 +37,15 @@ if (index < 0) {
 
   if (index !== 0) {
     document.querySelector("#intro-title").textContent = name;
-    const fields = document.querySelectorAll(".record-fields dd");
-    fields[3].textContent = "미등록";
-    fields[3].classList.add("unrecorded");
+    const occupation = document.querySelector("#occupation-name");
+    occupation.textContent = "미등록";
+    occupation.classList.add("unrecorded");
+    document.querySelector("#occupation-description").textContent = "직업 기록이 아직 등록되지 않았다.";
     const bio = document.querySelector(".profile-bio");
     bio.querySelectorAll("p").forEach((paragraph) => paragraph.remove());
     const pending = document.createElement("p");
     pending.className = "unrecorded";
-    pending.textContent = "세부 기록 미등록";
+    pending.textContent = "ERAC 소속. 세부 인물 기록 미등록.";
     bio.append(pending);
     document.querySelector(".portrait").hidden = true;
     document.querySelector(".empty-portrait").hidden = false;

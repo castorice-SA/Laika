@@ -422,6 +422,56 @@ h1 {
   margin: 0;
 }
 
+.field-title,
+.field-subtitle,
+.field-meta {
+  display: block;
+}
+
+.field-title {
+  font-weight: 600;
+}
+
+.field-subtitle {
+  margin-top: 0.45rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.field-meta {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font: 0.75rem/1.65 ui-monospace, monospace;
+  overflow-wrap: anywhere;
+}
+
+.field-description {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.85;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.organization-record {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  background: var(--panel);
+}
+
+.organization-record .eyebrow {
+  margin-bottom: 0.85rem;
+}
+
+.organization-record h2 {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+  font-weight: 550;
+}
+
 .profile-bio {
   margin-top: 2rem;
   line-height: 1.8;
