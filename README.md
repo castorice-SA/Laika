@@ -1,10 +1,12 @@
-# Raika
+# Laika
+
+영문명과 공개 저장소 이름은 사용자 요청으로 Raika에서 Laika로 변경했습니다. 공개 주소는 /Laika/입니다. 작업 연결을 유지하기 위해 로컬 폴더명 Raika와 기존 이미지 파일 경로 assets/raika/는 그대로 두었습니다. 이는 화면에 표시되는 이름과 무관합니다.
 
 현재 기관 설정: **황실 이상현상 연구청 — Extranormal Research Agency of the Crown (ERAC)**. 전후 대륙에서 발생한 이상현상에 전문적으로 대항하기 위해 설립된 신비 연구 기관이다. 원작과 구분되는 사용자 지정 설정이며 [기관 설정](docs/ERAC.md)을 따른다.
 
 라이카 개인 프로필 전용 정적 사이트. 기존 프로젝트명과 GitHub Pages 주소를 유지합니다.
 
-- 공개 주소: https://castorice-sa.github.io/Raika/
+- 공개 주소: https://castorice-sa.github.io/Laika/
 - 접속 화면 → 라이카 프로필. 명단과 다른 인물 전환은 제공하지 않습니다.
 - ERAC 문장, 어두운 PDA 디자인, 시작 문구와 한국어 번역, 라이카 이미지 7장을 유지합니다.
 - 라이카는 31세 학자이자 ERAC 조사 1팀 팀장입니다.
