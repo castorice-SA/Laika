@@ -14,7 +14,8 @@ assert.doesNotMatch(entry + profile, /왕실|고대신비|Eldritch|ELDRITCH|AUTH
 assert.match(entry, /class="access-button" href="profile.html"/);
 assert.match(entry, /id="terminal-title">RAIKA</);
 for (const text of ["Vivre, c'est faire vivre l'absurde.", 'But Man is not made for defeat.', 'A man can be destroyed but not defeated.', '산다는 것은 부조리를 살려 두는 것이다.', '하지만 인간은 패배하도록 만들어지지 않았다.', '인간은 파괴될지언정 패배하지 않는다.']) assert.ok(entry.includes(text), text);
-for (const text of ['라이카', '31세', '조사 1팀', '팀장', '학자', '인물 소개', '신념', '연구청과의 관계', '지휘 성향', '개인적 결함']) assert.ok(profile.includes(text), text);
+for (const text of ['라이카', '31세', '조사 1팀', '팀장', '학자', '인물 소개', '신념', '연구청과의 관계', '개인적 장점', '개인적 결함']) assert.ok(profile.includes(text), text);
+assert.doesNotMatch(profile, /지휘 성향|거절하기 어려운 충분한 이유/);
 assert.doesNotMatch(entry + profile, /characters-data|<script|character-switcher|character-arrow|인물 명단|15명|잔향 중계소|미종결 기록/);
 assert.doesNotMatch(profile, /\bhidden\b|href="[^"]*character/);
 assert.equal((profile.match(/<h1\b/g) || []).length, 1);
