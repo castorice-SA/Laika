@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="ERAC — 미종결 기록 · 인물 기록"
+      content="라이카 — ERAC 조사 1팀 팀장 · 인물 기록"
     />
     <meta name="theme-color" content="#090a0c" />
     <link
@@ -13,32 +13,26 @@
       type="image/svg+xml"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2307111f'/%3E%3Cpath d='M18 48V16h15.5C41 16 46 20.4 46 27c0 4.8-2.7 8.4-7 10.1L48 48H36.8l-7.3-9.8H28V48H18Zm10-18h5c2 0 3-1 3-2.8 0-1.7-1-2.7-3-2.7h-5V30Z' fill='%236ee7ff'/%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="styles.css?v=team-1" />
-    <title>라이카 · 미종결 기록</title>
+    <link rel="stylesheet" href="styles.css?v=raika-1" />
+    <title>라이카 · 인물 기록</title>
   </head>
   <body>
     <main class="shell">
-      <header class="topbar" aria-label="ERAC 미종결 기록">
-        <a class="brand" href="./" aria-label="미종결 기록 접속 화면으로 돌아가기">ERAC<span class="brand-subtitle">미종결 기록</span></a>
+      <header class="topbar" aria-label="라이카 인물 기록">
+        <a class="brand" href="./" aria-label="라이카 접속 화면으로 돌아가기">RAIKA<span class="brand-subtitle">ERAC · 인물 기록</span></a>
         <nav class="header-nav" aria-label="주 메뉴">
-          <a class="exit-link" href="characters.html">인물 명단</a>
           <a class="exit-link" href="./">접속 화면으로</a>
         </nav>
       </header>
 
-      <noscript><p class="empty-record">인물 기록을 열려면 JavaScript를 활성화해 주세요. <a href="characters.html">인물 명단으로</a></p></noscript>
-      <section class="intro" id="profile" aria-labelledby="intro-title" tabindex="-1" hidden>
+      <section class="intro" id="profile" aria-labelledby="intro-title" tabindex="-1">
         <div class="intro-copy">
           <p class="eyebrow">PERSONNEL FILE / 001</p>
-          <div class="character-switcher">
-            <a class="character-arrow" id="previous-character" href="profile.html?character=015" aria-label="이전 인물: 체르누시카" title="체르누시카"><span aria-hidden="true">←</span></a>
-            <h1 id="intro-title">RAIKA</h1>
-            <a class="character-arrow" id="next-character" href="profile.html?character=002" aria-label="다음 인물: 펠리세트" title="펠리세트"><span aria-hidden="true">→</span></a>
-          </div>
+          <h1 id="intro-title">RAIKA</h1>
           <p class="character-name">라이카</p>
           <dl class="record-fields">
-            <div><dt>이름</dt><dd id="record-name"></dd></div>
-            <div><dt>나이</dt><dd id="record-age"></dd></div>
+            <div><dt>이름</dt><dd id="record-name">라이카</dd></div>
+            <div><dt>나이</dt><dd id="record-age">31세</dd></div>
             <div>
               <dt>소속</dt>
               <dd>
@@ -52,37 +46,58 @@
               <dt>직업</dt>
               <dd>
                 <strong class="field-title" id="occupation-name">학자</strong>
-                <p class="field-description" id="occupation-description">미지를 탐구하고, 모호한 것을 규정하는 학자. 탐구욕을 원동력으로 삼으며, 진실은 언제나 불완전하고 질문은 답보다 아름답다는 사실을 잊지 않는다.</p>
+                <p class="field-description" id="occupation-description">미지를 탐구하고, 모호한 것을 규정하는 사람. 학문은 세계를 이해하는 수단이며, 탐정의 일은 그 이해를 누군가의 삶에 돌려주는 일이다.</p>
               </dd>
             </div>
-            <div><dt>부서</dt><dd><a href="characters.html#team-overview">조사 1팀</a></dd></div>
-            <div><dt>직책</dt><dd id="record-role"></dd></div>
-            <div><dt>담당</dt><dd id="record-specialty"></dd></div>
+            <div><dt>부서</dt><dd>조사 1팀</dd></div>
+            <div><dt>직책</dt><dd id="record-role">팀장</dd></div>
+            <div><dt>담당</dt><dd id="record-specialty">현장 지휘 · 신비 현상 분석 · 미해결 사건 조사</dd></div>
           </dl>
           <div class="profile-bio">
             <h2>인물 소개</h2>
-            <div id="bio-text"></div>
+            <div id="bio-text">
+              <p>왕실 고대신비 연구청 소속 신비 연구자이자 조사 1팀의 팀장. 연구실에서 기록을 대조하는 일로 경력을 시작했으나, 현재는 현장 조사와 사건 수사를 주도하고 있다.</p>
+              <p>말투는 차분하고 태도는 온화하다. 처음 만난 상대에게 쉽게 친근함을 요구하지 않으며, 침묵이 길어져도 서둘러 말을 채우지 않는다. 면담을 시작하기 전에는 상대가 앉을 자리를 고르고 차를 마실 시간을 준다. 그 때문에 라이카와의 첫 대화는 조사보다 조용한 방문에 가깝게 느껴지기도 한다.</p>
+              <p>그러나 질문을 시작한 뒤의 인상은 다르다.</p>
+              <p>라이카는 대답 속에서 비어 있는 부분을 잘 찾아낸다. 이야기의 모순뿐 아니라, 유독 자세히 설명하는 대목과 아무렇지 않게 건너뛰는 이름에도 주의를 기울인다. 상대가 불편해한다는 사실을 알아차리지 못하는 것은 아니다. 알아차리고도, 그 질문이 필요하다고 판단하면 계속한다.</p>
+              <p>그녀에게는 사실을 모른 채 건네는 위로가 무책임하게 느껴지는 경향이 있다. 상대에게 필요한 것이 해명이 아니라 함께 침묵해 줄 사람일 때조차 그렇다.</p>
+            </div>
           </div>
         </div>
         <figure class="portrait">
           <img src="assets/raika/raika-02.png" width="1664" height="2432" alt="별이 빛나는 밤하늘 아래 서 있는 라이카. 은백색 긴 머리와 검은 리본, 남색 코트 차림." decoding="async" />
           <figcaption><span>인물 사진</span><span>RAIKA / 02</span></figcaption>
         </figure>
-        <div class="empty-portrait" hidden><span id="portrait-record"></span><p>인물 사진 미등록</p><span>NO IMAGE ON FILE</span></div>
       </section>
 
-      <section class="personnel-detail" id="personnel-detail" aria-labelledby="detail-title" hidden>
-        <div class="detail-heading"><h2 id="detail-title">세부 인사 기록</h2><span>TEAM 01 / SUPPLEMENT</span></div>
+      <section class="personnel-detail" id="personnel-detail" aria-labelledby="detail-title">
+        <div class="detail-heading"><h2 id="detail-title">세부 인사 기록</h2><span>RAIKA / SUPPLEMENT</span></div>
         <div class="detail-grid">
-          <section class="record-panel"><h3>주요 이력</h3><p id="record-history"></p></section>
-          <section class="record-panel"><h3>조사 수단</h3><p id="record-methods"></p></section>
-          <section class="record-panel"><h3>운용 한계</h3><p id="record-limits"></p></section>
-          <section class="record-panel"><h3>관련 사건 · 잔향 중계소</h3><p id="record-stance"></p></section>
+          <section class="record-panel"><h3>신념</h3>
+            <p>라이카는 모든 사건에 납득할 만한 이유가 있다고 믿지 않는다. 누군가는 아무런 잘못 없이 죽고, 살아남은 사람에게도 반드시 보상이 주어지지는 않는다. 신비를 해석하고 원인을 규명한 뒤에도 남는 것은 돌려받을 수 없는 삶과 무용해진 약속일 수 있다.</p>
+            <p>그럼에도 그녀는 조사를 계속한다. 죽은 이를 되돌릴 수 없더라도 이름을 확인할 수는 있다. 사라진 사람을 찾지 못하더라도 마지막으로 머물렀던 장소까지는 갈 수 있다. 누구도 책임지지 않는 죽음 앞에서, 적어도 무슨 일이 있었는지 묻는 사람 하나는 남아 있어야 한다고 생각한다.</p>
+            <p>라이카가 견디지 못하는 것은 설명할 수 없는 세계 자체보다, 그것을 핑계로 너무 일찍 손을 놓는 사람의 태도다.</p>
+          </section>
+          <section class="record-panel"><h3>연구청과의 관계</h3>
+            <p>왕실에 봉사하는 연구청의 임무와 라이카 개인의 관심은 언제나 일치하지 않는다. 기관이 신비의 가치와 국가에 대한 위협을 우선할 때, 그녀는 그 현상에 휘말린 사람들의 행방을 먼저 확인하려 한다.</p>
+            <p>그렇다고 연구청을 떠날 생각은 없다. 개인의 선의만으로 확보할 수 없는 장비와 정보, 출입 권한이 있다는 것을 알기 때문이다.</p>
+            <p>라이카는 공식 조사 목적에 민간인 수색을 포함할 근거를 찾고, 폐기될 자료의 보존 가치를 설명하며, 중요하지 않다고 분류된 사건을 다른 기록과 연결해 다시 검토대에 올린다. 필요하다면 윗선이 관심을 가질 만한 언어로 보고서를 쓸 줄도 안다.</p>
+            <p>그 과정에서 자신이 구하려는 사람의 사정을 기관에 얼마나 공개해도 되는지는, 아직 명확한 답을 내리지 못한 문제다.</p>
+          </section>
+          <section class="record-panel"><h3>지휘 성향</h3>
+            <p>조사 1팀에서는 다른 사람의 전문적인 판단을 존중한다. 현장 안전과 의학적 판단을 자신의 직감으로 뒤집는 일은 드물며, 반대 의견을 제시했다는 이유로 팀원을 불이익에 처하지도 않는다.</p>
+            <p>문제는 철수한 다음에 나타난다. 라이카는 현장에서 물러날 수 있지만, 사건에서는 좀처럼 물러나지 못한다. 재조사에 필요한 조건을 묻고, 확보하지 못한 증거의 대체 수단을 찾으며, 끝내 중단된 작전을 다음 회의의 안건으로 가져온다.</p>
+            <p>한 번의 명령으로 동료를 위험에 빠뜨리기보다, 거절하기 어려운 충분한 이유를 계속 만들어내는 쪽이다. 팀원들이 지쳤다는 사실까지 반박해야 할 문제가 되어서는 안 된다는 지적은, 그녀에게도 남아 있는 숙제다.</p>
+          </section>
+          <section class="record-panel"><h3>개인적 결함</h3>
+            <p>라이카는 사람을 구하기 위해서는 진실을 알아야 한다고 믿었다. 그래서 상대가 숨기고 싶어 하는 것까지 밝혀냈고, 알아내고 나서야 돌이킬 수 없는 질문도 있다는 것을 배웠다.</p>
+            <p>지금은 묻기 전에 잠시 멈춘다. 그러나 그 짧은 침묵이 언제나 상대를 위한 것은 아니다. 자신이 감당할 수 있는 결과인지 가늠하는 시간일 때도 있다. 라이카는 다른 사람의 회피를 예리하게 짚어내면서, 자신의 집착에는 책임감이라는 이름을 붙이는 데 익숙하다.</p>
+            <p>그녀가 배워야 하는 것은 진실의 가치가 아니다. 진실을 알게 될 사람에게도 선택할 권리가 있다는 사실이다.</p>
+          </section>
         </div>
-        <section class="relationship-record"><h3>팀 내 협업 관계</h3><ul id="record-relationships"></ul></section>
       </section>
 
-      <details class="attachments" hidden>
+      <details class="attachments">
         <summary>첨부 이미지 <span>06 FILES</span></summary>
         <div class="image-grid">
           <figure><img src="assets/raika/raika-01.png" width="1664" height="2432" loading="lazy" decoding="async" alt="어두운 돌바닥에 앉아 있는 라이카" /><figcaption>01</figcaption></figure>
@@ -100,7 +115,5 @@
       <p>END OF RECORD</p>
     </footer>
 
-    <script src="characters-data.js?v=team-1" defer></script>
-    <script src="script.js?v=team-1" defer></script>
   </body>
 </html>
