@@ -1,5 +1,15 @@
 # ERAC logo concept v1
 
+## Current logo — Extranormal v2
+
+The active site uses [erac-logo-extranormal-v2.png](erac-logo-extranormal-v2.png). Edited with the built-in image generation tool under the imagegen skill to reflect the user-approved imperial agency name. The v1 asset and prompts below are historical, retained for recovery.
+
+Final edit prompt:
+
+Use case: text-localization. Edit target: attached existing ERAC institutional logo. Change ONLY the two small English lines below the large ERAC wordmark. Replace them with exact text: first line "EXTRANORMAL RESEARCH", second line "AGENCY OF THE CROWN". Preserve the crown, eye, circular seal, large ERAC lettering, composition, proportions, muted silver color, dark charcoal background, and existing style unchanged. No extra symbols, no added text, no redesign. This is a fictional imperial anomaly research agency. Output a single square logo image.
+
+Checked: crown, eye, seal and ERAC wordmark preserved; small text reads EXTRANORMAL RESEARCH / AGENCY OF THE CROWN.
+
 Created with the built-in image generation tool. Original project design, not a verified canonical emblem. Applied to the PDA entry screen at the user's request on 2026-09-28.
 
 Asset: [erac-logo-concept-v1.png](erac-logo-concept-v1.png)

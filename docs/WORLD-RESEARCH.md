@@ -1,5 +1,7 @@
 # 원작 조사 노트 — ERAC 인물 설계
 
+> 아래는 원작 확인 기록이다. 사용자 요청으로 프로젝트의 ERAC는 황실 이상현상 연구청(Extranormal Research Agency of the Crown)으로 변경되었다. 현재 창작 설정은 [ERAC.md](ERAC.md)를 따른다. 원작의 기관명과 설립 배경을 현재 프로젝트에 다시 적용하지 않는다.
+
 조사일: 2026-09-27
 원작: [탐정 양은 ■■을 공상합니다](https://stalight774.neocities.org/detectives_XXX/)
 방법: 실제 인터랙티브 화면에서 선택지를 순차적으로 열고 표시된 설명을 읽음.

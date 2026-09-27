@@ -1,5 +1,7 @@
 # Raika
 
+현재 기관 설정: **황실 이상현상 연구청 — Extranormal Research Agency of the Crown (ERAC)**. 전후 대륙에서 발생한 이상현상에 전문적으로 대항하기 위해 설립된 신비 연구 기관이다. 원작과 구분되는 사용자 지정 설정이며 [기관 설정](docs/ERAC.md)을 따른다.
+
 라이카 개인 프로필 전용 정적 사이트. 기존 프로젝트명과 GitHub Pages 주소를 유지합니다.
 
 - 공개 주소: https://castorice-sa.github.io/Raika/
