@@ -1,12 +1,12 @@
 :root {
   color-scheme: dark;
-  --ink: #191918;
-  --panel: #242421;
-  --text: #f2eee6;
-  --muted: #b3afa6;
-  --line: rgba(255, 255, 255, 0.12);
-  --accent: #d6bf91;
-  --accent-rgb: 214, 191, 145;
+  --ink: #090a0c;
+  --panel: #111316;
+  --text: #cdced0;
+  --muted: #96999f;
+  --line: rgba(180, 185, 194, 0.12);
+  --accent: #a4a9b2;
+  --accent-rgb: 164, 169, 178;
   font-family:
     Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
@@ -16,6 +16,10 @@
 
 * {
   box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 html {
@@ -28,8 +32,8 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    linear-gradient(rgba(var(--accent-rgb), 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--accent-rgb), 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(var(--accent-rgb), 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-rgb), 0.018) 1px, transparent 1px),
     var(--ink);
   background-size: 48px 48px;
 }
@@ -46,9 +50,9 @@ footer {
 
 .entry-page {
   background-image:
-    radial-gradient(ellipse at 50% 45%, rgba(var(--accent-rgb), 0.09), transparent 65%),
-    linear-gradient(rgba(var(--accent-rgb), 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--accent-rgb), 0.035) 1px, transparent 1px);
+    radial-gradient(ellipse at 50% 45%, rgba(var(--accent-rgb), 0.025), transparent 65%),
+    linear-gradient(rgba(var(--accent-rgb), 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-rgb), 0.018) 1px, transparent 1px);
   background-size: auto, 48px 48px, 48px 48px;
 }
 
@@ -119,10 +123,10 @@ footer {
   padding: 1rem 1.25rem 1rem 1.6rem;
   margin-top: 0.75rem;
   gap: 1.5rem;
-  border: 1px solid rgba(var(--accent-rgb), 0.65);
-  border-radius: 8px;
-  background: linear-gradient(120deg, #3c372d, #252522);
-  box-shadow: inset 0 1px 0 rgba(var(--accent-rgb), 0.15), 0 0 28px rgba(var(--accent-rgb), 0.08);
+  border: 1px solid rgba(var(--accent-rgb), 0.32);
+  border-radius: 2px;
+  background: linear-gradient(120deg, #191c20, #101114);
+  box-shadow: inset 0 1px 0 rgba(var(--accent-rgb), 0.05);
   color: var(--text);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 1rem;
@@ -167,7 +171,7 @@ footer {
 
 .access-button:hover {
   border-color: var(--accent);
-  box-shadow: inset 0 1px 0 rgba(var(--accent-rgb), 0.2), 0 0 36px rgba(var(--accent-rgb), 0.18);
+  box-shadow: inset 0 1px 0 rgba(var(--accent-rgb), 0.12);
   transform: translateY(-2px);
 }
 
@@ -290,17 +294,73 @@ footer {
 }
 
 .person-card-active {
-  border-color: rgba(var(--accent-rgb), 0.6);
-  background: linear-gradient(120deg, #37342c, var(--panel));
+  border-color: rgba(var(--accent-rgb), 0.35);
+  background: linear-gradient(120deg, #1b1e22, var(--panel));
 }
 
 .person-card-active .person-state {
   color: var(--accent);
 }
 
-.person-card-active:hover {
+.person-card:hover {
   border-color: var(--accent);
-  background: #3a372f;
+  background: #1b1e22;
+}
+
+.character-switcher {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.character-switcher h1 {
+  font-size: clamp(1.7rem, 4vw, 3.8rem);
+  text-align: center;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+
+.character-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 48px;
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  background: var(--panel);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.4rem;
+}
+
+.character-arrow:hover {
+  border-color: var(--accent);
+  background: #22252a;
+}
+
+.empty-portrait {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  min-height: 28rem;
+  border: 1px solid var(--line);
+  background: #0e1012;
+  color: var(--muted);
+}
+
+.empty-portrait span {
+  font: 0.75rem ui-monospace, monospace;
+  letter-spacing: 0.12em;
+}
+
+.empty-portrait p {
+  margin: 1rem 0 0;
+}
+
+.empty-record {
+  padding: 4rem 0;
+  line-height: 1.8;
 }
 
 .intro {
