@@ -1,1 +1,1 @@
-document.querySelector("#year").textContent = new Date().getFullYear();
+// Reserved for future PDA interactions. Current controls use native HTML.
