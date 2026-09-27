@@ -1,13 +1,7 @@
-// Names and order are user-provided. Unwritten records carry no invented lore.
-const characters = [
-  "라이카", "펠리세트", "벨카", "스트렐카", "비온",
-  "알리비나", "에노스", "아니타", "엑토르", "크라사프카",
-  "도치카", "데지크", "아브레크", "리시치카", "체르누시카",
-];
-const recordId = (index) => String(index + 1).padStart(3, "0");
 const requested = new URLSearchParams(window.location.search).get("character") ?? "001";
-const index = characters.findIndex((_, position) => recordId(position) === requested);
+const index = CHARACTER_RECORDS.findIndex((record) => record.id === requested);
 const profile = document.querySelector("#profile");
+const put = (selector, text) => { document.querySelector(selector).textContent = text; };
 
 if (index < 0) {
   document.title = "기록 없음 · 미종결 기록";
@@ -15,42 +9,58 @@ if (index < 0) {
   notice.className = "empty-record";
   notice.textContent = "존재하지 않는 인물 기록입니다. 상단의 인물 명단에서 다시 선택해 주세요.";
   profile.replaceWith(notice);
-  document.querySelector("footer p").textContent = "ERAC / RECORD NOT FOUND";
+  put("footer p", "ERAC / RECORD NOT FOUND");
 } else {
-  const name = characters[index];
-  document.title = name + " · 미종결 기록";
-  document.querySelector(".intro .eyebrow").textContent = "PERSONNEL FILE / " + requested + " — 15";
-  document.querySelector(".character-name").textContent = name;
-  document.querySelector(".record-fields dd").textContent = name;
-  document.querySelector("footer p").textContent = "ERAC / PERSONNEL " + requested;
+  const person = CHARACTER_RECORDS[index];
+  document.title = person.name + " · 미종결 기록";
+  put(".intro .eyebrow", "INVESTIGATION TEAM 01 / " + person.id + " — 15");
+  put("#intro-title", index === 0 ? "RAIKA" : person.name);
+  put(".character-name", person.name);
+  put("#record-name", person.name);
+  put("#record-age", person.age + "세");
+  put("#record-role", person.role);
+  put("#record-specialty", person.specialty);
+  put("#occupation-name", person.occupation);
+  put("#occupation-description", person.occupationDescription);
+  put("footer p", "ERAC / TEAM 01 / " + person.id);
+
+  const bio = document.querySelector("#bio-text");
+  for (const text of person.bio) {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = text;
+    bio.append(paragraph);
+  }
+  for (const key of ["history", "methods", "limits", "stance"]) {
+    put("#record-" + key, person[key]);
+  }
+  const relationships = document.querySelector("#record-relationships");
+  for (const relation of person.relationships) {
+    const target = CHARACTER_RECORDS.find((record) => record.id === relation.id);
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = "profile.html?character=" + target.id;
+    link.textContent = target.name + " · " + target.role;
+    const description = document.createElement("p");
+    description.textContent = relation.text;
+    item.append(link, description);
+    relationships.append(item);
+  }
 
   for (const [selector, offset, label] of [
     ["#previous-character", -1, "이전 인물"],
     ["#next-character", 1, "다음 인물"],
   ]) {
-    const target = (index + offset + characters.length) % characters.length;
+    const target = CHARACTER_RECORDS[(index + offset + CHARACTER_RECORDS.length) % CHARACTER_RECORDS.length];
     const link = document.querySelector(selector);
-    link.href = "profile.html?character=" + recordId(target);
-    link.setAttribute("aria-label", label + ": " + characters[target]);
-    link.title = characters[target];
+    link.href = "profile.html?character=" + target.id;
+    link.setAttribute("aria-label", label + ": " + target.name);
+    link.title = target.name;
   }
 
-  if (index !== 0) {
-    document.querySelector("#intro-title").textContent = name;
-    const occupation = document.querySelector("#occupation-name");
-    occupation.textContent = "미등록";
-    occupation.classList.add("unrecorded");
-    document.querySelector("#occupation-description").textContent = "직업 기록이 아직 등록되지 않았다.";
-    const bio = document.querySelector(".profile-bio");
-    bio.querySelectorAll("p").forEach((paragraph) => paragraph.remove());
-    const pending = document.createElement("p");
-    pending.className = "unrecorded";
-    pending.textContent = "ERAC 소속. 세부 인물 기록 미등록.";
-    bio.append(pending);
-    document.querySelector(".portrait").hidden = true;
-    document.querySelector(".empty-portrait").hidden = false;
-  } else {
-    document.querySelector(".attachments").hidden = false;
-  }
+  document.querySelector(".portrait").hidden = index !== 0;
+  document.querySelector(".empty-portrait").hidden = index === 0;
+  document.querySelector(".attachments").hidden = index !== 0;
+  put("#portrait-record", "TEAM 01 / " + person.id);
   profile.hidden = false;
+  document.querySelector("#personnel-detail").hidden = false;
 }

@@ -547,7 +547,40 @@ footer {
   padding: 3rem 0;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(2rem, 6vw, 5rem);
-  align-items: center;
+  align-items: start;
+}
+
+.team-command { display: flex; flex-wrap: wrap; gap: 1.25rem 3rem; margin: 1.5rem 0 0; }
+.team-command > div { display: flex; gap: 1rem; font-size: 0.85rem; line-height: 1.7; }
+.team-command dt { color: var(--muted); }
+.team-command dd { margin: 0; }
+.team-command a, .record-fields a { text-underline-offset: 0.3em; }
+.team-brief { margin: 0 0 2rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.team-brief summary { cursor: pointer; padding: 1.25rem 0; font-size: 0.9rem; line-height: 1.8; }
+.team-brief summary span { float: right; margin-left: 1rem; color: var(--muted); font: 0.7rem/2.3 ui-monospace, monospace; }
+.brief-body { max-width: 54rem; padding: 0.5rem 0 1.25rem; }
+.brief-body h2 { margin: 1rem 0; font-size: 1rem; }
+.brief-body p { color: var(--muted); font-size: 0.9rem; line-height: 1.9; word-break: keep-all; overflow-wrap: anywhere; }
+.person-role { margin: -0.5rem 0 0.8rem; font-size: 0.85rem; line-height: 1.6; color: var(--text); }
+.person-card .person-state { line-height: 1.6; gap: 0.5rem; }
+.personnel-detail { margin: 0 0 3rem; border-top: 1px solid var(--line); }
+.detail-heading { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; padding: 1.5rem 0; }
+.detail-heading h2 { margin: 0; font-size: 1.05rem; font-weight: 500; }
+.detail-heading > span { color: var(--muted); font: 0.7rem ui-monospace, monospace; }
+.detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--line); background: var(--line); }
+.record-panel { padding: 1.6rem; background: var(--ink); }
+.record-panel h3, .relationship-record h3 { margin: 0 0 1rem; font-size: 0.85rem; font-weight: 500; color: var(--accent); }
+.record-panel p, .relationship-record p { margin: 0; font-size: 0.95rem; line-height: 1.9; word-break: keep-all; overflow-wrap: anywhere; }
+.relationship-record { margin-top: 2rem; }
+.relationship-record ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin: 0; padding: 0; list-style: none; }
+.relationship-record a { display: inline-block; margin-bottom: 0.6rem; font-size: 0.9rem; text-underline-offset: 0.3em; }
+.relationship-record p { color: var(--muted); }
+.empty-portrait { gap: 0.8rem; }
+
+@media (max-width: 760px) {
+  .detail-grid, .relationship-record ul { grid-template-columns: 1fr; }
+  .record-panel { padding: 1.25rem; }
+  .team-brief summary span { display: none; }
 }
 
 .eyebrow {

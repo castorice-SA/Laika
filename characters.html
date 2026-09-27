@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="ERAC — 미종결 기록 · 인물 명단" />
     <meta name="theme-color" content="#090a0c" />
-    <link rel="stylesheet" href="styles.css?v=records-1" />
-    <title>인물 명단 · 미종결 기록</title>
+    <link rel="stylesheet" href="styles.css?v=team-1" />
+    <title>조사 1팀 · 미종결 기록</title>
   </head>
   <body>
     <main class="shell">
@@ -17,33 +17,45 @@
       <section class="roster" aria-labelledby="roster-title">
         <div class="roster-heading">
           <div>
-            <p class="eyebrow">PERSONNEL DIRECTORY</p>
-            <h1 id="roster-title">인물 명단</h1>
+            <p class="eyebrow">INVESTIGATION TEAM 01</p>
+            <h1 id="roster-title">조사 1팀</h1>
           </div>
           <p class="roster-count"><strong>15</strong> REGISTERED</p>
         </div>
-        <section class="organization-record" aria-labelledby="organization-title">
+        <section class="organization-record" id="team-overview" aria-labelledby="organization-title">
           <p class="eyebrow">AFFILIATION / ERAC</p>
           <h2 id="organization-title">왕실 고대신비 연구청</h2>
           <p class="field-meta" lang="en">The Eldritch Research Authority of the Crown</p>
-          <p class="field-description">대륙의 마법 학회에 대항하여 설립된 대영제국의 신비 연구 기관. 아래 기록은 본청 소속 인물의 명부이다.</p>
+          <p class="field-description">대륙의 마법 학회에 대항하여 설립된 대영제국의 신비 연구 기관. 조사 1팀은 실종, 신비 현상과 기록 불일치가 겹친 사건의 현장 조사·증거 회수·교차 검증을 수행한다.</p>
+          <dl class="team-command"><div><dt>팀장</dt><dd><a href="profile.html">라이카</a></dd></div><div><dt>부팀장</dt><dd><a href="profile.html?character=002">펠리세트</a></dd></div><div><dt>편성</dt><dd>15명 · 임무별 조사조 운용</dd></div></dl>
         </section>
+        <details class="team-brief">
+          <summary>팀 운용 지침 및 관련 사건 <span>TEAM BRIEF</span></summary>
+          <div class="brief-body">
+            <h2>조사와 귀환을 함께 책임진다</h2>
+            <p>라이카가 현장 판단을 지휘하고 펠리세트가 인원·허가·자원을 조정한다. 전원이 같은 현장에 진입하지 않으며, 현장조와 후방 분석조를 사건에 맞춰 편성한다.</p>
+            <p>의무 담당 비온과 안전 담당 아브레크는 각자의 위험 판단에 따라 일시 중단을 요구할 수 있다. 재개 조건과 반대 의견은 기록에 남긴다. 원본 증거는 보존하고, 증언의 모순을 곧바로 거짓으로 판정하지 않는다.</p>
+            <h2>관련 사건 / 잔향 중계소</h2>
+            <p>런던 외곽의 폐쇄 중계소 조사. 위험 확산 억제와 민간인 일곱 명의 인계를 근거로 종결됐으나, 구조용 보온포 여덟 개의 사용 기록과 인계 명부 사이에 불일치가 남았다.</p>
+            <p>현재는 보관 자료의 재검토 단계다. 물품 사용량은 인원수의 확증이 아니며, 추가 실종자의 존재와 현장 재진입 여부는 아직 확정되지 않았다.</p>
+          </div>
+        </details>
         <ol class="roster-grid">
-          <li><a class="person-card person-card-active" href="profile.html" aria-label="라이카 인물 기록 열기"><span class="person-number">001</span><h2>라이카</h2><span class="person-state">기록 열람 <span aria-hidden="true">↗</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=002" aria-label="펠리세트 인물 기록 열기"><span class="person-number">002</span><h2>펠리세트</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=003" aria-label="벨카 인물 기록 열기"><span class="person-number">003</span><h2>벨카</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=004" aria-label="스트렐카 인물 기록 열기"><span class="person-number">004</span><h2>스트렐카</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=005" aria-label="비온 인물 기록 열기"><span class="person-number">005</span><h2>비온</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=006" aria-label="알리비나 인물 기록 열기"><span class="person-number">006</span><h2>알리비나</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=007" aria-label="에노스 인물 기록 열기"><span class="person-number">007</span><h2>에노스</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=008" aria-label="아니타 인물 기록 열기"><span class="person-number">008</span><h2>아니타</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=009" aria-label="엑토르 인물 기록 열기"><span class="person-number">009</span><h2>엑토르</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=010" aria-label="크라사프카 인물 기록 열기"><span class="person-number">010</span><h2>크라사프카</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=011" aria-label="도치카 인물 기록 열기"><span class="person-number">011</span><h2>도치카</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=012" aria-label="데지크 인물 기록 열기"><span class="person-number">012</span><h2>데지크</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=013" aria-label="아브레크 인물 기록 열기"><span class="person-number">013</span><h2>아브레크</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=014" aria-label="리시치카 인물 기록 열기"><span class="person-number">014</span><h2>리시치카</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
-          <li><a class="person-card" href="profile.html?character=015" aria-label="체르누시카 인물 기록 열기"><span class="person-number">015</span><h2>체르누시카</h2><span class="person-state">세부 기록 미등록 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card person-card-active" href="profile.html" aria-label="라이카 인물 기록 열기"><span class="person-number">001</span><h2>라이카</h2><p class="person-role">팀장 · 학자</p><span class="person-state">현장 지휘 · 신비 현상 분석 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=002" aria-label="펠리세트 인물 기록 열기"><span class="person-number">002</span><h2>펠리세트</h2><p class="person-role">부팀장 · 공무원</p><span class="person-state">작전 조정 · 대외 협의 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=003" aria-label="벨카 인물 기록 열기"><span class="person-number">003</span><h2>벨카</h2><p class="person-role">현장 확보 담당 · 용병</p><span class="person-state">근접 엄호 · 진입로 확보 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=004" aria-label="스트렐카 인물 기록 열기"><span class="person-number">004</span><h2>스트렐카</h2><p class="person-role">정찰 담당 · 사냥꾼</p><span class="person-state">원거리 관측 · 동선 추적 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=005" aria-label="비온 인물 기록 열기"><span class="person-number">005</span><h2>비온</h2><p class="person-role">의무 담당 · 의사</p><span class="person-state">응급 처치 · 노출 후 관찰 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=006" aria-label="알리비나 인물 기록 열기"><span class="person-number">006</span><h2>알리비나</h2><p class="person-role">물질 분석 담당 · 학자</p><span class="person-state">연금술 분석 · 시료 보존 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=007" aria-label="에노스 인물 기록 열기"><span class="person-number">007</span><h2>에노스</h2><p class="person-role">정보 분석 담당 · 해커</p><span class="person-state">통신 로그 · 기기 정보 복구 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=008" aria-label="아니타 인물 기록 열기"><span class="person-number">008</span><h2>아니타</h2><p class="person-role">증언 조사 담당 · 탐정</p><span class="person-state">면담 · 진술 교차 검증 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=009" aria-label="엑토르 인물 기록 열기"><span class="person-number">009</span><h2>엑토르</h2><p class="person-role">사망자 확인 담당 · 장의사</p><span class="person-state">신원 대조 · 유해와 유품 인계 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=010" aria-label="크라사프카 인물 기록 열기"><span class="person-number">010</span><h2>크라사프카</h2><p class="person-role">의식 분석 담당 · 학자</p><span class="person-state">상징 해석 · 의식 흔적 조사 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=011" aria-label="도치카 인물 기록 열기"><span class="person-number">011</span><h2>도치카</h2><p class="person-role">기록 관리 담당 · 사무직</p><span class="person-state">원본 보존 · 인계 기록 대조 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=012" aria-label="데지크 인물 기록 열기"><span class="person-number">012</span><h2>데지크</h2><p class="person-role">구조·회수 담당 · 소방수</p><span class="person-state">인명 구조 · 철수 동선 구축 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=013" aria-label="아브레크 인물 기록 열기"><span class="person-number">013</span><h2>아브레크</h2><p class="person-role">현장 안전 담당 · 청소부</p><span class="person-state">오염 구역 통제 · 현장 안정화 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=014" aria-label="리시치카 인물 기록 열기"><span class="person-number">014</span><h2>리시치카</h2><p class="person-role">대외 탐문 담당 · 바텐더</p><span class="person-state">비공식 제보 · 지역 관계망 <span aria-hidden="true">→</span></span></a></li>
+          <li><a class="person-card" href="profile.html?character=015" aria-label="체르누시카 인물 기록 열기"><span class="person-number">015</span><h2>체르누시카</h2><p class="person-role">관측 기준 담당 · 천문학자</p><span class="person-state">시간·방위 대조 · 관측 오차 분석 <span aria-hidden="true">→</span></span></a></li>
         </ol>
       </section>
     </main>
