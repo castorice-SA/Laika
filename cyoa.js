@@ -1,258 +1,182 @@
 (() => {
   "use strict";
 
-  const STORAGE_KEY = "laika-cyoa-v1";
-  const BASE_RESOURCE = 8;
-  const RISK_CAP = 6;
+  const STORAGE_KEY = "laika-character-cyoa-v2";
+  const IDENTITY_KEY = "laika-character-identity-v2";
+  const BASE_POINTS = 8;
 
   const sections = [
     {
-      id: "stance",
+      id: "career",
       number: "01",
-      title: "재조사 원칙",
-      description: "같은 사건도 무엇을 먼저 지키느냐에 따라 전혀 다른 조사 계획이 됩니다. 하나의 원칙만 선택하십시오.",
+      title: "직업",
+      description: "당신이 세상을 이해하고 생존하는 가장 익숙한 방식입니다. 소속과 힘의 기원과는 별개입니다.",
       mode: "single",
-      required: true,
+      min: 1,
+      max: 1,
       rule: "1개 선택 · 비용 없음",
       choices: [
-        {
-          id: "stance_record",
-          code: "METHOD / RECORD",
-          title: "기록이 맞을 때까지 대조한다",
-          body: "종결 보고서, 인계 명부, 물품 기록의 작성 시점과 책임자를 먼저 교차 검증한다. 현장 재진입보다 문서의 빈칸을 우선한다.",
-          cost: 0,
-          risk: 0,
-          effect: "기록 기반 선택지 해금",
-          tags: ["record"]
-        },
-        {
-          id: "stance_people",
-          code: "METHOD / PEOPLE",
-          title: "사람이 견딜 수 있는 질문부터 한다",
-          body: "생존자와 팀원의 침묵을 자료처럼 다루지 않는다. 증언의 속도와 공개 범위를 당사자의 선택에 맞춘다.",
-          cost: 0,
-          risk: 0,
-          effect: "증언 기반 선택지 해금",
-          tags: ["people"]
-        },
-        {
-          id: "stance_field",
-          code: "METHOD / FIELD",
-          title: "끝난 현장을 다시 본다",
-          body: "문서의 오차만으로 결론 내리지 않는다. 위험 조건을 재평가하고, 필요하다면 폐쇄 중계소의 관측 사각을 직접 확인한다.",
-          cost: 0,
-          risk: 1,
-          effect: "현장 선택지 해금 · 위험 +1",
-          tags: ["field"]
-        }
+        { id: "career_scholar", code: "WORK / SCHOLAR", title: "학자", body: "미지의 현상을 분류하고 모호한 것을 규정한다. 현장보다 기록에 강하지만, 기록이 틀렸다면 직접 확인하러 간다.", cost: 0, effect: "분석 · 연구", tags: ["analysis"] },
+        { id: "career_detective", code: "WORK / DETECTIVE", title: "탐정", body: "사람과 사건 사이의 빈칸을 추적한다. 진술과 물증의 불일치를 오래 붙잡고 있는 직업.", cost: 0, effect: "추론 · 면담", tags: ["people", "analysis"] },
+        { id: "career_mercenary", code: "WORK / MERCENARY", title: "용병", body: "위험한 장소에서 누군가가 살아 돌아올 시간을 번다. 계약보다 생환을 우선하는 사람일 수도 있다.", cost: 0, effect: "전투 · 보호", tags: ["field"] },
+        { id: "career_doctor", code: "WORK / DOCTOR", title: "의사", body: "신비와 공상이 몸과 정신에 남기는 흔적을 다룬다. 치료는 때로 현상 분석보다 빠른 결정을 요구한다.", cost: 0, effect: "의료 · 안정", tags: ["care"] },
+        { id: "career_official", code: "WORK / OFFICIAL", title: "공무원", body: "절차가 실제 행동으로 이어지게 만든다. 허가와 책임 소재를 남기는 일 역시 생존 기술이다.", cost: 0, effect: "조정 · 절차", tags: ["procedure"] },
+        { id: "career_hacker", code: "WORK / HACKER", title: "해커", body: "기계와 정보망에 남은 흔적을 읽는다. 신비가 데이터와 장치에 스며든 시대의 추적자.", cost: 0, effect: "정보 · 침투", tags: ["information"] },
+        { id: "career_cleric", code: "WORK / CLERIC", title: "성직자", body: "믿음과 의례, 공동체의 언어로 이상현상에 맞선다. 무엇을 신성이라 부를지는 사람마다 다르다.", cost: 0, effect: "의례 · 정신", tags: ["ritual"] },
+        { id: "career_hunter", code: "WORK / HUNTER", title: "사냥꾼", body: "흔적과 지형, 습성을 읽어 목표를 추적한다. 공상체를 상대할 때도 먼저 이동 경로부터 본다.", cost: 0, effect: "추적 · 야전", tags: ["field"] }
       ]
     },
     {
-      id: "clues",
+      id: "origin",
       number: "02",
-      title: "남아 있는 불일치",
-      description: "각 항목은 여덟 번째 사람의 존재를 입증하지 않습니다. 다만 공식 결론이 설명하지 못한 부분을 남깁니다.",
-      mode: "multi",
-      max: 3,
-      required: true,
-      rule: "최대 3개 · 각 자원 1",
-      choices: [
-        {
-          id: "clue_blanket",
-          code: "EVIDENCE / 08",
-          title: "보온포 여덟 개",
-          body: "사용 처리된 보온포는 여덟 개, 구조 인계된 민간인은 일곱 명. 도치카가 최초로 보고한 수량 불일치.",
-          cost: 1,
-          risk: 0,
-          effect: "수량 대조",
-          tags: ["record", "count"]
-        },
-        {
-          id: "clue_manifest",
-          code: "EVIDENCE / 07",
-          title: "인계 명부 일곱 명",
-          body: "누가 누구를 언제 인계했는지 다시 추적한다. 누락이 현장에 있었는지, 서류에 있었는지는 아직 모른다.",
-          cost: 1,
-          risk: 0,
-          effect: "책임 흐름 추적",
-          tags: ["record", "people"]
-        },
-        {
-          id: "clue_coat",
-          code: "EVIDENCE / UNKNOWN",
-          title: "소유자 불명의 외투",
-          body: "회수품 목록의 주인 없는 외투. 구조된 일곱 명의 물품인지, 현장 잔존물인지 분류가 끝나지 않았다.",
-          cost: 1,
-          risk: 0,
-          effect: "신원 단서",
-          tags: ["field", "identity"]
-        },
-        {
-          id: "clue_call",
-          code: "EVIDENCE / SIGNAL",
-          title: "해석되지 않은 호출",
-          body: "중계 기록 끝부분에 남은 불완전한 호출. 음성인지 반복 신호인지조차 합의되지 않은 채 보관되었다.",
-          cost: 1,
-          risk: 1,
-          effect: "신호 분석 · 위험 +1",
-          tags: ["signal", "field"]
-        }
-      ]
-    },
-    {
-      id: "team",
-      number: "03",
-      title: "재검토에 부를 사람",
-      description: "조사 1팀의 판단은 한 사람의 확신으로 완성되지 않습니다. 서로 다른 책임과 전문성을 가진 인원을 선택하십시오.",
-      mode: "multi",
-      max: 2,
-      required: false,
-      rule: "최대 2명 · 각 자원 1",
-      choices: [
-        {
-          id: "team_dochika",
-          code: "TEAM / RECORD",
-          title: "도치카 · 기록 분석",
-          body: "보온포와 인계 명부의 불일치를 처음 보고한 기록 담당자. 작은 차이를 결론이 아니라 검증 대상으로 남긴다.",
-          cost: 1,
-          risk: 0,
-          effect: "기록 검증 강화",
-          tags: ["record"],
-          requires: () => hasAny("clue_blanket", "clue_manifest"),
-          lockText: "보온포 또는 인계 명부를 먼저 선택해야 합니다."
-        },
-        {
-          id: "team_felisette",
-          code: "TEAM / CONTROL",
-          title: "펠리세트 · 작전 조정",
-          body: "부팀장. 재조사 자체와 실행 가능한 재조사를 구분하고, 허가와 책임 범위를 문서로 남긴다.",
-          cost: 1,
-          risk: 0,
-          effect: "공식 절차 확보",
-          tags: ["procedure"]
-        },
-        {
-          id: "team_avrek",
-          code: "TEAM / SAFETY",
-          title: "아브레크 · 현장 안전",
-          body: "첫 조사에서 추가 진입 중단을 건의했다. 다시 들어가려면 당시 철수 판단부터 검증해야 한다.",
-          cost: 1,
-          risk: 0,
-          effect: "현장 위험 완화",
-          tags: ["field", "safety"],
-          requires: () => isSelected("stance_field") || hasAny("clue_coat", "clue_call"),
-          lockText: "현장 접근 원칙 또는 현장성 단서를 먼저 선택해야 합니다."
-        }
-      ]
-    },
-    {
-      id: "actions",
-      number: "04",
-      title: "실행할 조사",
-      description: "무엇을 알아낼지보다 무엇을 감수할지가 드러나는 단계입니다. 자원이 허용하는 만큼 복수 선택할 수 있습니다.",
-      mode: "multi",
-      max: 3,
-      required: true,
-      rule: "최대 3개 · 조건부 해금",
-      choices: [
-        {
-          id: "action_crosscheck",
-          code: "ACTION / ARCHIVE",
-          title: "원본 기록 재대조",
-          body: "종결 보고서가 만들어지기 전 단계의 원본 기록을 다시 배열한다. 작성 시각과 수정 이력의 간극을 찾는다.",
-          cost: 2,
-          risk: 0,
-          effect: "안전 · 느린 검증",
-          tags: ["record"],
-          requires: () => countTags("record") >= 2,
-          lockText: "기록 성격의 선택을 2개 이상 확보해야 합니다."
-        },
-        {
-          id: "action_witness",
-          code: "ACTION / TESTIMONY",
-          title: "생존자 재면담",
-          body: "일곱 명에게 같은 질문을 반복하지 않는다. 기억이 아니라 당시 서로 확인했던 사람과 순서를 묻는다.",
-          cost: 2,
-          risk: 0,
-          effect: "증언 교차 확인",
-          tags: ["people"],
-          requires: () => isSelected("stance_people") || isSelected("clue_manifest"),
-          lockText: "사람 중심 원칙 또는 인계 명부를 먼저 선택해야 합니다."
-        },
-        {
-          id: "action_signal",
-          code: "ACTION / SIGNAL",
-          title: "중계 신호 재생",
-          body: "보관된 신호를 제한된 환경에서 다시 분석한다. 현장과 동일한 반복 조건이 발생할 가능성을 감수한다.",
-          cost: 2,
-          risk: 2,
-          effect: "신호 검증 · 위험 +2",
-          tags: ["signal"],
-          requires: () => isSelected("clue_call"),
-          lockText: "해석되지 않은 호출을 먼저 선택해야 합니다."
-        },
-        {
-          id: "action_reentry",
-          code: "ACTION / RE-ENTRY",
-          title: "폐쇄 중계소 조건부 재진입",
-          body: "관측 사각을 직접 확인한다. 재진입은 안전 담당의 중단 권한과 철수 기준을 문서화한 경우에만 추진한다.",
-          cost: 3,
-          risk: 3,
-          effect: "직접 확인 · 위험 +3",
-          tags: ["field"],
-          requires: () => isSelected("team_avrek") && (isSelected("stance_field") || isSelected("team_felisette")),
-          lockText: "아브레크와 현장 접근 원칙 또는 펠리세트가 필요합니다."
-        }
-      ]
-    },
-    {
-      id: "directive",
-      number: "05",
-      title: "처리 방침",
-      description: "조사가 끝났다고 선언하는 대신, 지금 확보한 근거로 어디까지 책임질 수 있는지 결정합니다.",
+      title: "힘의 기원",
+      description: "신비한 힘이 당신에게 들어온 경로입니다. 직업이나 소속과 같은 분류가 아닙니다.",
       mode: "single",
-      required: true,
-      rule: "1개 선택 · 최종 출력",
+      min: 1,
+      max: 1,
+      rule: "1개 선택 · 구성점 1",
       choices: [
-        {
-          id: "directive_hold",
-          code: "DIRECTIVE / OPEN",
-          title: "미종결 상태를 유지한다",
-          body: "존재를 입증하지 못했다는 이유만으로 가능성을 삭제하지 않는다. 추가 근거가 생길 때까지 사건 번호를 열어 둔다.",
-          cost: 0,
-          risk: 0,
-          effect: "보존 우선",
-          tags: ["open"]
-        },
-        {
-          id: "directive_identity",
-          code: "DIRECTIVE / SUBJECT",
-          title: "미확인 대상 임시 식별자를 부여한다",
-          body: "여덟 번째 사람을 확정하지 않은 채, 서로 다른 단서가 같은 대상을 가리키는지 추적할 수 있도록 임시 식별자를 만든다.",
-          cost: 0,
-          risk: 0,
-          effect: "추적 가능성 확보",
-          tags: ["identity"],
-          requires: () => selectedClueCount() >= 2,
-          lockText: "서로 다른 불일치 단서를 2개 이상 선택해야 합니다."
-        },
-        {
-          id: "directive_request",
-          code: "DIRECTIVE / REVIEW",
-          title: "공식 재조사 승인을 요청한다",
-          body: "개인의 집착으로 남기지 않는다. 선택한 근거, 위험, 반대 의견까지 포함해 연구청의 공식 검토 대상으로 올린다.",
-          cost: 0,
-          risk: 0,
-          effect: "기관 책임으로 전환",
-          tags: ["procedure"],
-          requires: () => selectedActionCount() >= 2 && resourceRemaining() >= 0,
-          lockText: "실행할 조사를 2개 이상 구성해야 합니다."
-        }
+        { id: "origin_inheritor", code: "ORIGIN / SUCCESSION", title: "전승자", body: "누군가가 남긴 계보, 의식, 술식 또는 권리를 이어받았다. 힘에는 언제나 이전 사용자의 흔적이 남아 있다.", cost: 1, effect: "계승된 신비", tags: ["legacy"] },
+        { id: "origin_awakened", code: "ORIGIN / BLOOM", title: "공상 개화자", body: "공상과 심상이 현실에 닿으며 힘이 개화했다. 능력은 당신의 욕망이나 상처와 닮은 모양을 띨 수 있다.", cost: 1, effect: "내면에서 발현", tags: ["imagination"] },
+        { id: "origin_contract", code: "ORIGIN / CONTRACT", title: "계약자", body: "인간이 아닌 존재 또는 신비한 체계와 합의를 맺었다. 얻은 힘과 약속의 범위가 정확히 일치하지 않을 수도 있다.", cost: 1, effect: "계약 기반", tags: ["contract"] },
+        { id: "origin_otherworld", code: "ORIGIN / OTHERWORLD", title: "이계 기원자", body: "이 세계의 규칙과 완전히 겹치지 않는 곳에서 왔거나 그 영향 아래 태어났다. 당신 자신이 증거가 된다.", cost: 1, effect: "이질적 기원", tags: ["otherworld"] },
+        { id: "origin_vein", code: "ORIGIN / LEY", title: "성맥 접속자", body: "세계의 흐름과 직접 연결되어 신비를 끌어쓴다. 장소와 환경의 상태가 능력의 안정성에 영향을 준다.", cost: 1, effect: "환경과 공명", tags: ["ley"] }
+      ]
+    },
+    {
+      id: "traits",
+      number: "03",
+      title: "개인 특성",
+      description: "능력치가 아니라, 당신이 위기와 타인을 대하는 방식입니다. 두 가지를 선택하십시오.",
+      mode: "multi",
+      min: 2,
+      max: 2,
+      rule: "정확히 2개 · 각 구성점 1",
+      choices: [
+        { id: "trait_observer", code: "TRAIT / OBSERVE", title: "침착한 관찰", body: "당황하기 전에 주변의 변화부터 센다. 작은 차이를 오래 기억한다.", cost: 1, effect: "관찰에 강함", tags: ["analysis"] },
+        { id: "trait_curiosity", code: "TRAIT / CURIOSITY", title: "위험한 호기심", body: "금지된 문과 이해되지 않은 현상을 그냥 지나치지 못한다. 살아남는 이유이자 위험해지는 이유.", cost: 1, effect: "미지에 끌림", tags: ["imagination"] },
+        { id: "trait_duty", code: "TRAIT / DUTY", title: "끈질긴 책임감", body: "끝났다고 기록된 일도 누군가 책임져야 한다면 다시 연다. 자신에게 너무 많은 책임을 돌릴 수 있다.", cost: 1, effect: "포기하지 않음", tags: ["procedure"] },
+        { id: "trait_empathy", code: "TRAIT / EMPATHY", title: "과잉 공감", body: "타인의 감정과 분위기에 빠르게 반응한다. 사람을 이해하는 만큼 상처도 쉽게 옮겨온다.", cost: 1, effect: "감정 민감", tags: ["people"] },
+        { id: "trait_reflex", code: "TRAIT / REFLEX", title: "위기 반사", body: "생각보다 몸이 먼저 움직인다. 한 번의 망설임이 치명적인 현장에서 살아남은 습관.", cost: 1, effect: "즉각 대응", tags: ["field"] },
+        { id: "trait_skeptic", code: "TRAIT / DOUBT", title: "의심하는 습관", body: "확실한 설명일수록 한 번 더 반박해 본다. 음모론자가 아니라 틀릴 가능성을 남기는 사람.", cost: 1, effect: "가설 검증", tags: ["analysis"] },
+        { id: "trait_discipline", code: "TRAIT / DISCIPLINE", title: "규율 준수", body: "절차와 약속을 쉽게 깨지 않는다. 규칙이 사람을 보호하기 위해 존재한다고 믿는다.", cost: 1, effect: "안정적 운용", tags: ["procedure"] },
+        { id: "trait_border", code: "TRAIT / LIMINAL", title: "경계인 감각", body: "어느 집단에도 완전히 속하지 않는 데 익숙하다. 서로 다른 세계의 언어를 중간에서 번역한다.", cost: 1, effect: "낯선 것에 적응", tags: ["otherworld"] }
+      ]
+    },
+    {
+      id: "mystery",
+      number: "04",
+      title: "신비 능력",
+      description: "당신이 실제 조사와 생존에서 사용하는 핵심 수단입니다. 하나는 필수, 두 번째는 선택입니다.",
+      mode: "multi",
+      min: 1,
+      max: 2,
+      rule: "1~2개 · 각 구성점 2",
+      choices: [
+        { id: "mystery_perception", code: "MYSTERY / PERCEPTION", title: "신비 지각 및 분석", body: "평범한 감각으로는 지나치는 신비의 흔적을 인지하고, 관측 가능한 조건을 분리해 이해한다.", cost: 2, effect: "관측 · 해석", tags: ["analysis"] },
+        { id: "mystery_dismantle", code: "MYSTERY / DISMANTLE", title: "공상 해체", body: "공상체와 공상 현상을 구성 단위로 분석한다. 곧바로 소멸시키는 힘이 아니라 약점과 구조를 찾아내는 이해에 가깝다.", cost: 2, effect: "구조 분석", tags: ["analysis", "imagination"] },
+        { id: "mystery_human", code: "MYSTERY / HUMAN", title: "인간 분석", body: "표정과 말투, 선택의 패턴을 통해 사람의 심리를 분석한다. 생각을 마음대로 읽는 능력은 아니다.", cost: 2, effect: "심리 추론", tags: ["people"] },
+        { id: "mystery_filter", code: "MYSTERY / FILTER", title: "정보 필터", body: "위험한 정보와 인식성 오염을 걸러내는 1차 방어 수단. 완전한 면역 대신 버틸 시간을 번다.", cost: 2, effect: "인지 방어", tags: ["information"] },
+        { id: "mystery_alchemy", code: "MYSTERY / ALCHEMY", title: "연금 구조 해석", body: "물질과 에너지의 구조, 변인과 반응을 계측한다. 무기 제작보다 분석과 실험에 강한 연금술 운용.", cost: 2, effect: "실험 · 계측", tags: ["analysis"] },
+        { id: "mystery_logs", code: "MYSTERY / LOGS", title: "연결 로그 추적", body: "기기와 정보망에 남은 연결 이력을 조사한다. 손실된 인간 기억이 아니라 시스템의 흔적을 복원한다.", cost: 2, effect: "디지털 추적", tags: ["information"] },
+        { id: "mystery_gate", code: "MYSTERY / GATE", title: "게이트위빙", body: "방문과 표식의 조건을 이용해 공간 사이에 문을 엮는다. 높은 소모와 사전 준비를 감수해야 한다.", cost: 2, effect: "공간 이동", tags: ["field", "ritual"] },
+        { id: "mystery_curse", code: "MYSTERY / RITUAL", title: "주술", body: "상징과 준비된 조건을 통해 효과를 누적시키는 신비. 즉흥전보다 사전 설계와 해석이 중요하다.", cost: 2, effect: "상징 · 의식", tags: ["ritual"] }
+      ]
+    },
+    {
+      id: "equipment",
+      number: "05",
+      title: "장비",
+      description: "신비만으로 모든 문제를 해결하지 않습니다. 하나는 필수, 여유가 있다면 두 개까지 휴대할 수 있습니다.",
+      mode: "multi",
+      min: 1,
+      max: 2,
+      rule: "1~2개 · 각 구성점 1",
+      choices: [
+        { id: "gear_meter", code: "GEAR / METER", title: "공상 오염 측정기", body: "공간의 불안정성과 오염 변화를 기록하는 휴대 계측기. 수치는 답이 아니라 경고다.", cost: 1, effect: "환경 계측", tags: ["analysis"] },
+        { id: "gear_coat", code: "GEAR / COAT", title: "다층 방호 코트", body: "파편과 열, 일부 신비성 접촉을 줄이기 위해 보강한 현장 코트. 모든 위험을 막아주지는 않는다.", cost: 1, effect: "현장 생존", tags: ["field"] },
+        { id: "gear_notebook", code: "GEAR / NOTE", title: "봉인식 수첩", body: "관측과 추론을 분리해 기록하고, 위험 정보의 재열람을 제한하는 개인 기록 도구.", cost: 1, effect: "기록 보호", tags: ["information"] },
+        { id: "gear_recovery", code: "GEAR / RECOVERY", title: "회수 키트", body: "표본 봉인, 임시 라벨, 증거 포장과 응급 고정을 위한 조사용 묶음. 화려하지 않지만 자주 살아남는다.", cost: 1, effect: "증거 회수", tags: ["field"] },
+        { id: "gear_jammer", code: "GEAR / JAMMER", title: "휴대 신호 차단기", body: "위험한 송수신과 반복 신호를 잠시 끊어내는 장비. 원인을 제거하지는 못한다.", cost: 1, effect: "신호 억제", tags: ["information"] },
+        { id: "gear_lens", code: "GEAR / LENS", title: "분석 렌즈", body: "육안 관찰을 보조하는 광학·신비 복합 렌즈. 사용자의 해석 능력이 낮으면 잡음만 늘어난다.", cost: 1, effect: "관측 보조", tags: ["analysis"] },
+        { id: "gear_anchor", code: "GEAR / ANCHOR", title: "표식 앵커", body: "공간 이동과 귀환 지점을 식별하는 휴대 표식. 경계가 흔들리는 장소에서 길을 잃지 않게 한다.", cost: 1, effect: "귀환 표식", tags: ["field"] },
+        { id: "gear_medkit", code: "GEAR / STABILIZE", title: "현장 안정 키트", body: "출혈과 쇼크, 경미한 신비 노출 이후의 기본 처치를 위한 장비. 전문 치료를 대체하지 않는다.", cost: 1, effect: "응급 안정", tags: ["care"] }
+      ]
+    },
+    {
+      id: "companion",
+      number: "06",
+      title: "동료",
+      description: "누구와 함께 움직이는지는 능력만큼 큰 선택입니다. 이름이 아니라 역할을 고릅니다.",
+      mode: "single",
+      min: 1,
+      max: 1,
+      rule: "1개 선택 · 비용 없음",
+      choices: [
+        { id: "companion_record", code: "PARTNER / RECORD", title: "기록 분석가", body: "당신의 추론을 그대로 믿지 않고 원문과 수치를 다시 확인한다. 틀렸을 때 가장 먼저 말해주는 사람.", cost: 0, effect: "검증 파트너", tags: ["analysis"] },
+        { id: "companion_guard", code: "PARTNER / GUARD", title: "현장 보호자", body: "당신이 관측하는 동안 출입구와 퇴로를 확보한다. 위험한 판단에 몸으로 반대할 수도 있다.", cost: 0, effect: "생존 파트너", tags: ["field"] },
+        { id: "companion_medic", code: "PARTNER / MEDIC", title: "의료 담당", body: "부상과 인지 이상을 가장 먼저 알아차린다. 조사 성공보다 살아 돌아오는 일을 우선한다.", cost: 0, effect: "회복 파트너", tags: ["care"] },
+        { id: "companion_liaison", code: "PARTNER / LIAISON", title: "연락관", body: "허가와 외부 협력, 구조 요청을 연결한다. 당신의 계획을 기관이 이해할 언어로 바꾼다.", cost: 0, effect: "조정 파트너", tags: ["procedure"] },
+        { id: "companion_anomaly", code: "PARTNER / ANOMALOUS", title: "비적대 공상체", body: "인간과 같은 방식으로 세계를 보지 않는 동행자. 도움이 되지만, 인간 사회의 기준으로는 설명하기 어렵다.", cost: 0, effect: "이질적 동행", tags: ["imagination"] },
+        { id: "companion_solo", code: "PARTNER / SOLO", title: "단독 활동", body: "고정 동료 없이 임무마다 협력자를 바꾼다. 자유롭지만 당신의 오판을 즉시 막아줄 사람이 없다.", cost: 0, effect: "독립 운용", tags: ["solo"] }
+      ]
+    },
+    {
+      id: "incident",
+      number: "07",
+      title: "당신을 바꾼 사건",
+      description: "현재의 당신이 만들어진 계기입니다. 사건의 진상보다, 그 뒤에 무엇이 남았는지가 중요합니다.",
+      mode: "single",
+      min: 1,
+      max: 1,
+      rule: "1개 선택 · 비용 없음",
+      choices: [
+        { id: "incident_zone", code: "PAST / CONTAMINATION", title: "공상 오염 지역 생존", body: "지도에서 사라진 구역에서 살아 나왔다. 이후 당신은 장소가 기억을 가진다는 말을 쉽게 비웃지 않는다.", cost: 0, effect: "생존 경험", tags: ["field"] },
+        { id: "incident_failure", code: "PAST / FAILURE", title: "구조 실패", body: "살릴 수 없었던 사람이 있다. 그 경험은 지금도 당신이 철수 명령을 받아들이는 방식을 바꾼다.", cost: 0, effect: "책임의 상처", tags: ["care"] },
+        { id: "incident_archive", code: "PAST / FORBIDDEN", title: "금지 기록 접촉", body: "보지 말았어야 할 기록을 읽고 살아남았다. 내용보다 그 기록을 숨겨야 했던 이유가 더 오래 남았다.", cost: 0, effect: "위험 정보 경험", tags: ["information"] },
+        { id: "incident_bargain", code: "PAST / PARLEY", title: "공상체와의 협상", body: "적대적이지 않은 공상체와 대화해 사건을 끝낸 적이 있다. 이후 '괴물'이라는 분류를 쉽게 믿지 않는다.", cost: 0, effect: "분류에 대한 의심", tags: ["people", "imagination"] },
+        { id: "incident_break", code: "PAST / BREACH", title: "경계 붕괴 목격", body: "공간과 시간의 안정성이 무너지는 순간을 직접 봤다. 현실이 언제나 같은 규칙을 지킨다는 믿음을 잃었다.", cost: 0, effect: "경계 경험", tags: ["otherworld"] },
+        { id: "incident_rescued", code: "PAST / RESCUED", title: "ERAC 조사에 의해 구조됨", body: "한때 당신은 조사 대상이거나 구조 대상이었다. 지금의 연구청과 맺는 관계에는 그때의 기억이 따라다닌다.", cost: 0, effect: "기관과의 과거", tags: ["procedure"] }
+      ]
+    },
+    {
+      id: "relationship",
+      number: "08",
+      title: "ERAC와의 관계",
+      description: "황실 이상현상 연구청은 이 세계의 유일한 선택지가 아닙니다. 당신이 기관과 어떤 거리에서 살아가는지 정합니다.",
+      mode: "single",
+      min: 1,
+      max: 1,
+      rule: "1개 선택 · 비용 없음",
+      choices: [
+        { id: "relation_agent", code: "ERAC / AGENT", title: "정식 조사요원", body: "연구청의 권한과 장비를 사용하며 그 결과에 대한 보고 책임도 진다.", cost: 0, effect: "내부 인력", tags: ["procedure"] },
+        { id: "relation_researcher", code: "ERAC / CONTRACT", title: "외부 계약 연구원", body: "특정 분야의 전문성 때문에 필요할 때 호출된다. 조직의 규율과 개인의 방식 사이에 거리가 있다.", cost: 0, effect: "전문 협력", tags: ["analysis"] },
+        { id: "relation_survivor", code: "ERAC / PROTECTED", title: "보호 대상 출신", body: "과거 ERAC의 보호와 감시를 함께 받았다. 지금도 연구청을 완전히 믿지도, 완전히 떠나지도 못한다.", cost: 0, effect: "복합적 신뢰", tags: ["people"] },
+        { id: "relation_watch", code: "ERAC / WATCHLIST", title: "감시 대상", body: "당신의 힘이나 기원 때문에 정기적으로 상태를 보고해야 한다. 적은 아니지만 완전한 자유도 없다.", cost: 0, effect: "조건부 자유", tags: ["otherworld"] },
+        { id: "relation_informant", code: "ERAC / INFORMANT", title: "비공식 정보원", body: "현장 소문과 비공개 경로를 연구청에 넘긴다. 기록에는 당신의 이름보다 코드가 더 자주 남는다.", cost: 0, effect: "그림자 협력", tags: ["information"] },
+        { id: "relation_independent", code: "ERAC / INDEPENDENT", title: "독립 활동자", body: "ERAC의 명령 체계 밖에서 움직인다. 필요할 때 협력하지만 조사 목적과 윤리는 스스로 정한다.", cost: 0, effect: "기관 외부", tags: ["solo"] }
+      ]
+    },
+    {
+      id: "price",
+      number: "09",
+      title: "대가",
+      description: "힘은 당신에게 무엇을 요구합니까? 마지막 선택은 결말이 아니라, 앞으로의 모든 장면에 따라붙을 조건입니다.",
+      mode: "single",
+      min: 1,
+      max: 1,
+      rule: "1개 선택 · 구성점 +1~2 반환",
+      choices: [
+        { id: "price_memory", code: "PRICE / MEMORY", title: "기억 마모", body: "큰 힘을 사용할수록 사소한 개인 기억부터 흐려진다. 임무 기록이 때로 당신의 기억보다 믿을 만하다.", cost: 0, refund: 2, effect: "구성점 +2", tags: ["memory"] },
+        { id: "price_sense", code: "PRICE / SENSE", title: "감각 과부하", body: "신비를 깊이 인지한 뒤에는 평범한 소리와 빛까지 지나치게 선명해진다. 회복에는 시간과 고립이 필요하다.", cost: 0, refund: 1, effect: "구성점 +1", tags: ["sense"] },
+        { id: "price_sleep", code: "PRICE / SLEEP", title: "수면 침식", body: "능력을 쓸수록 잠이 얕아지고 꿈에 현실의 잔향이 섞인다. 깨어 있는 시간만큼 꿈도 관리해야 한다.", cost: 0, refund: 1, effect: "구성점 +1", tags: ["sleep"] },
+        { id: "price_mark", code: "PRICE / MARK", title: "신체 표식", body: "힘의 사용 흔적이 몸에 남는다. 숨길 수는 있어도 완전히 지울 수 없고, 숙련자는 그 흔적을 알아본다.", cost: 0, refund: 1, effect: "구성점 +1", tags: ["body"] },
+        { id: "price_contract", code: "PRICE / DEBT", title: "계약 채무", body: "힘을 빌린 존재에게 정해진 의무를 갚아야 한다. 명령 복종이 아니라, 어길 경우 대가가 생기는 약속이다.", cost: 0, refund: 2, effect: "구성점 +2", tags: ["contract"], requires: () => isSelected("origin_contract"), lockText: "계약자만 선택할 수 있습니다." },
+        { id: "price_identity", code: "PRICE / ANCHOR", title: "존재 흔들림", body: "이 세계에 오래 머물수록 이름, 그림자, 기록 중 하나가 가끔 현실과 어긋난다. 자신을 고정할 앵커가 필요하다.", cost: 0, refund: 2, effect: "구성점 +2", tags: ["otherworld"], requires: () => isSelected("origin_otherworld"), lockText: "이계 기원자만 선택할 수 있습니다." }
       ]
     }
   ];
 
-  const sectionMap = new Map(sections.map(section => [section.id, section]));
   const choiceMap = new Map();
   sections.forEach(section => {
     section.choices.forEach(choice => {
@@ -261,66 +185,61 @@
     });
   });
 
-  const state = {
-    selected: new Set()
-  };
+  const state = { selected: new Set() };
+  const identity = { name: "", codename: "", age: "" };
 
   const els = {
     sections: document.querySelector("#choice-sections"),
     template: document.querySelector("#choice-template"),
     resource: document.querySelector("#resource-value"),
-    risk: document.querySelector("#risk-value"),
+    resourceTotal: document.querySelector("#resource-total"),
+    refund: document.querySelector("#refund-value"),
     progress: document.querySelector("#progress-bar"),
     status: document.querySelector("#status-message"),
     count: document.querySelector("#selection-count"),
     summary: document.querySelector("#selection-summary"),
+    miniIdentity: document.querySelector("#mini-identity"),
     resultState: document.querySelector("#result-state"),
     resultSummary: document.querySelector("#result-summary"),
+    resultRecords: document.querySelector("#result-records"),
     resultNotes: document.querySelector("#result-notes"),
-    copy: document.querySelector("#copy-report")
+    sheetCodename: document.querySelector("#sheet-codename"),
+    sheetName: document.querySelector("#sheet-name"),
+    copy: document.querySelector("#copy-report"),
+    name: document.querySelector("#character-name"),
+    codename: document.querySelector("#character-codename"),
+    age: document.querySelector("#character-age")
   };
 
   function isSelected(id) {
     return state.selected.has(id);
   }
 
-  function hasAny(...ids) {
-    return ids.some(isSelected);
-  }
-
   function selectedChoices() {
     return [...state.selected].map(id => choiceMap.get(id)).filter(Boolean);
-  }
-
-  function resourceSpent(excludingIds = []) {
-    const excluded = new Set(excludingIds);
-    return selectedChoices()
-      .filter(choice => !excluded.has(choice.id))
-      .reduce((sum, choice) => sum + (choice.cost || 0), 0);
-  }
-
-  function resourceRemaining() {
-    return BASE_RESOURCE - resourceSpent();
-  }
-
-  function riskTotal() {
-    return selectedChoices().reduce((sum, choice) => sum + (choice.risk || 0), 0);
-  }
-
-  function countTags(tag) {
-    return selectedChoices().filter(choice => (choice.tags || []).includes(tag)).length;
   }
 
   function selectedInSection(sectionId) {
     return selectedChoices().filter(choice => choice.sectionId === sectionId);
   }
 
-  function selectedClueCount() {
-    return selectedInSection("clues").length;
+  function selectedRefund() {
+    return selectedChoices().reduce((sum, choice) => sum + (choice.refund || 0), 0);
   }
 
-  function selectedActionCount() {
-    return selectedInSection("actions").length;
+  function pointsSpent(excludingIds = []) {
+    const excluded = new Set(excludingIds);
+    return selectedChoices()
+      .filter(choice => !excluded.has(choice.id))
+      .reduce((sum, choice) => sum + (choice.cost || 0), 0);
+  }
+
+  function totalPoints() {
+    return BASE_POINTS + selectedRefund();
+  }
+
+  function pointsRemaining() {
+    return totalPoints() - pointsSpent();
   }
 
   function meetsRequirement(choice) {
@@ -334,6 +253,17 @@
       .map(choice => choice.id);
   }
 
+  function projectedRefund(section, incomingChoice) {
+    let refund = selectedRefund();
+    if (section.mode === "single") {
+      selectedInSection(section.id).forEach(existing => {
+        refund -= existing.refund || 0;
+      });
+    }
+    refund += incomingChoice.refund || 0;
+    return refund;
+  }
+
   function disabledReason(choice, section) {
     if (isSelected(choice.id)) return "";
 
@@ -345,14 +275,11 @@
       return `이 구획에서는 최대 ${section.max}개까지 선택할 수 있습니다.`;
     }
 
-    const projectedSpent = resourceSpent(refundableIds(section, choice)) + (choice.cost || 0);
-    if (projectedSpent > BASE_RESOURCE) {
-      return "남은 조사 자원이 부족합니다.";
-    }
-
-    const projectedRisk = riskTotal() + (choice.risk || 0);
-    if (projectedRisk > RISK_CAP) {
-      return "허용 가능한 노출 위험을 초과합니다.";
+    const excluded = refundableIds(section, choice);
+    const spent = pointsSpent(excluded) + (choice.cost || 0);
+    const available = BASE_POINTS + projectedRefund(section, choice);
+    if (spent > available) {
+      return "남은 구성점이 부족합니다. 먼저 대가를 선택하면 일부 점수를 되돌려 받을 수 있습니다.";
     }
 
     return "";
@@ -394,6 +321,10 @@
     sanitizeSelections();
     persist();
     render();
+  }
+
+  function sectionComplete(section) {
+    return selectedInSection(section.id).length >= (section.min || 0);
   }
 
   function renderSections() {
@@ -443,45 +374,57 @@
         card.querySelector(".choice-lock").textContent = reason;
 
         const costParts = [];
-        if (choice.cost) costParts.push(`자원 -${choice.cost}`);
-        if (choice.risk) costParts.push(`위험 +${choice.risk}`);
+        if (choice.cost) costParts.push(`구성점 -${choice.cost}`);
+        if (choice.refund) costParts.push(`구성점 +${choice.refund}`);
         card.querySelector(".choice-cost").textContent = costParts.length ? costParts.join(" · ") : "COST / 0";
       });
     });
   }
 
   function renderStatus() {
-    const remaining = resourceRemaining();
-    const risk = riskTotal();
-    const selected = state.selected.size;
-    const totalRequiredSections = sections.filter(section => section.required).length;
-    const completedRequired = sections.filter(section => section.required && selectedInSection(section.id).length > 0).length;
+    const completeCount = sections.filter(sectionComplete).length;
+    const next = sections.find(section => !sectionComplete(section));
 
-    els.resource.textContent = String(remaining);
-    els.risk.textContent = String(risk);
-    els.progress.style.width = `${Math.round((completedRequired / totalRequiredSections) * 100)}%`;
+    els.resource.textContent = String(pointsRemaining());
+    els.resourceTotal.textContent = ` / ${totalPoints()}`;
+    els.refund.textContent = String(selectedRefund());
+    els.progress.style.width = `${Math.round((completeCount / sections.length) * 100)}%`;
+    els.count.textContent = `${state.selected.size} SELECTED`;
 
-    if (!selectedInSection("stance").length) {
-      els.status.textContent = "재조사 원칙을 선택하십시오.";
-    } else if (!selectedClueCount()) {
-      els.status.textContent = "설명되지 않은 불일치 단서를 선택하십시오.";
-    } else if (!selectedActionCount()) {
-      els.status.textContent = "선택한 근거를 어떻게 검증할지 결정하십시오.";
-    } else if (!selectedInSection("directive").length) {
-      els.status.textContent = "현재 조사 조합에 대한 처리 방침을 선택하십시오.";
+    if (next) {
+      const currentCount = selectedInSection(next.id).length;
+      const need = Math.max(0, (next.min || 0) - currentCount);
+      els.status.textContent = need > 1
+        ? `${next.title}: ${need}개를 더 선택하십시오.`
+        : `${next.title}을(를) 선택하십시오.`;
     } else {
-      els.status.textContent = `계획 구성 완료 · 자원 ${remaining} · 위험 ${risk}`;
+      els.status.textContent = "캐릭터 기록이 완성되었습니다. 아래 개인 기록 카드를 확인하십시오.";
     }
+  }
 
-    els.count.textContent = `${selected} SELECTED`;
+  function displayName() {
+    return identity.codename || identity.name || "미등록 인물";
+  }
+
+  function identitySubtitle() {
+    const bits = [];
+    if (identity.name && identity.codename) bits.push(identity.name);
+    if (identity.age) bits.push(`${identity.age}세`);
+    return bits.length ? bits.join(" · ") : "기록 작성 중";
+  }
+
+  function renderIdentity() {
+    els.miniIdentity.innerHTML = `<strong>${escapeHtml(displayName())}</strong><span>${escapeHtml(identitySubtitle())}</span>`;
+    els.sheetCodename.textContent = (identity.codename || identity.name || "UNREGISTERED").toUpperCase();
+    const nameBits = [];
+    if (identity.name) nameBits.push(identity.name);
+    if (identity.age) nameBits.push(`${identity.age}세`);
+    els.sheetName.textContent = nameBits.length ? nameBits.join(" · ") : "이름 미등록";
   }
 
   function renderSummary() {
     const groups = sections
-      .map(section => ({
-        section,
-        choices: selectedInSection(section.id)
-      }))
+      .map(section => ({ section, choices: selectedInSection(section.id) }))
       .filter(group => group.choices.length);
 
     if (!groups.length) {
@@ -492,91 +435,77 @@
     els.summary.innerHTML = groups.map(({ section, choices }) => `
       <section class="summary-group">
         <h3>${section.number} / ${section.title}</h3>
-        <ul>
-          ${choices.map(choice => `<li>${choice.title}</li>`).join("")}
-        </ul>
+        <ul>${choices.map(choice => `<li>${choice.title}</li>`).join("")}</ul>
       </section>
     `).join("");
   }
 
-  function finalDirective() {
-    return selectedInSection("directive")[0] || null;
+  function titles(sectionId) {
+    return selectedInSection(sectionId).map(choice => choice.title);
   }
 
-  function approachText() {
-    if (isSelected("stance_record")) {
-      return "기록의 불일치를 출발점으로 삼아, 확정되지 않은 추론과 실제 문서 근거를 분리하는 계획";
-    }
-    if (isSelected("stance_people")) {
-      return "생존자와 팀원의 선택권을 지키면서 증언을 교차 확인하는 계획";
-    }
-    if (isSelected("stance_field")) {
-      return "현장 조건을 다시 검증하되 첫 철수 판단까지 조사 대상으로 포함하는 계획";
-    }
-    return "아직 재조사 원칙이 정해지지 않은 계획";
+  function firstTitle(sectionId) {
+    return titles(sectionId)[0] || "";
+  }
+
+  function characterComplete() {
+    return sections.every(sectionComplete);
+  }
+
+  function characterSummary() {
+    const career = firstTitle("career");
+    const origin = firstTitle("origin");
+    const relation = firstTitle("relationship");
+    const abilities = titles("mystery").join(", ");
+    const incident = firstTitle("incident");
+    const price = firstTitle("price");
+
+    return `${displayName()}은(는) ${relation}의 위치에서 살아가는 ${career}이다. ${origin}의 방식으로 신비한 힘을 얻었고, 핵심 수단으로 ${abilities}을(를) 사용한다. ${incident}을(를) 지나 현재의 인물이 되었으며, 그 힘에는 ‘${price}’라는 대가가 따라붙는다. 이 기록은 결말이 아니라 시작점이다.`;
   }
 
   function renderResult() {
-    const directive = finalDirective();
-    const complete = Boolean(
-      selectedInSection("stance").length &&
-      selectedClueCount() &&
-      selectedActionCount() &&
-      directive
-    );
+    renderIdentity();
 
-    if (!complete) {
-      els.resultState.textContent = "계획 미완성";
+    if (!characterComplete()) {
+      els.resultState.textContent = "작성 중";
       els.resultState.classList.remove("result-state-ready");
-      els.resultSummary.textContent = "마지막 처리 방침까지 선택하면 현재 조합에 맞춘 재조사 계획이 생성됩니다.";
+      els.resultSummary.textContent = "마지막 항목인 대가까지 선택하면 지금까지의 선택이 하나의 캐릭터 기록으로 정리됩니다.";
+      els.resultRecords.innerHTML = "";
       els.resultNotes.innerHTML = "";
       return;
     }
 
-    const clueTitles = selectedInSection("clues").map(choice => choice.title);
-    const actionTitles = selectedInSection("actions").map(choice => choice.title);
-    const teamTitles = selectedInSection("team").map(choice => choice.title.split(" · ")[0]);
-    const risk = riskTotal();
-
-    els.resultState.textContent = directive.title;
+    els.resultState.textContent = "기록 완료";
     els.resultState.classList.add("result-state-ready");
-    els.resultSummary.textContent =
-      `${approachText()}으로 정리되었습니다. ${clueTitles.join(", ")}을 핵심 근거로 삼고, ${actionTitles.join(", ")}을 실행 단계에 포함합니다. 최종 방침은 ‘${directive.title}’입니다.`;
+    els.resultSummary.textContent = characterSummary();
 
-    const notes = [];
-    if (teamTitles.length) {
-      notes.push(`재검토 참여: ${teamTitles.join(", ")}.`);
-    } else {
-      notes.push("추가 참여 인원 없이 라이카 단독 검토로 시작합니다.");
-    }
+    els.resultRecords.innerHTML = sections.map(section => {
+      const values = titles(section.id);
+      return `
+        <div class="result-record">
+          <span>${section.number} · ${section.title}</span>
+          <strong>${values.join(" / ")}</strong>
+        </div>
+      `;
+    }).join("");
 
-    if (risk >= 5) {
-      notes.push("노출 위험이 매우 높습니다. 계획 실행 전 중단 기준과 철수 조건을 별도 문서화해야 합니다.");
-    } else if (risk >= 3) {
-      notes.push("현장 또는 신호 노출 위험이 포함됩니다. 제한된 단계 실행이 적합합니다.");
-    } else {
-      notes.push("현재 구성은 기록·증언 중심이며 직접 노출 위험이 낮습니다.");
-    }
-
-    if (isSelected("team_felisette")) {
-      notes.push("펠리세트의 참여로 허가·책임 범위를 공식 기록에 남길 수 있습니다.");
-    }
-    if (isSelected("team_avrek")) {
-      notes.push("아브레크의 중단 권한을 재진입 조건에 포함합니다.");
-    }
-    if (isSelected("team_dochika")) {
-      notes.push("도치카의 최초 불일치 보고를 결론이 아닌 검증 출발점으로 유지합니다.");
-    }
-
+    const notes = [
+      `잔여 구성점: ${pointsRemaining()} / 총 ${totalPoints()}.`,
+      "이 기록은 캐릭터의 출발 조건만 정리하며, 이후 사건의 결말이나 생존 여부를 결정하지 않습니다.",
+      "능력의 세부 경지·수치·숨겨진 해금 조건은 별도 확장 영역으로 남겨 둡니다."
+    ];
     els.resultNotes.innerHTML = notes.map(note => `<li>${note}</li>`).join("");
   }
 
   function buildReportText() {
     const lines = [
-      "ERAC / 미종결 기록 — 재조사 계획",
-      "================================",
-      `조사 자원: ${resourceRemaining()} / ${BASE_RESOURCE}`,
-      `노출 위험: ${riskTotal()} / ${RISK_CAP}`,
+      "LAIKA / ERAC 인물 생성 기록",
+      "==========================",
+      `표시명: ${displayName()}`,
+      identity.name ? `이름: ${identity.name}` : "이름: 미등록",
+      identity.codename ? `코드네임: ${identity.codename}` : "코드네임: 미등록",
+      identity.age ? `나이: ${identity.age}세` : "나이: 미등록",
+      `구성점: ${pointsRemaining()} / ${totalPoints()}`,
       ""
     ];
 
@@ -584,18 +513,17 @@
       const selected = selectedInSection(section.id);
       if (!selected.length) return;
       lines.push(`[${section.number}] ${section.title}`);
-      selected.forEach(choice => lines.push(`- ${choice.title}`));
+      selected.forEach(choice => lines.push(`- ${choice.title}: ${choice.body}`));
       lines.push("");
     });
 
-    const directive = finalDirective();
-    if (directive) {
-      lines.push("요약");
-      lines.push(els.resultSummary.textContent.trim());
+    if (characterComplete()) {
+      lines.push("캐릭터 요약");
+      lines.push(characterSummary());
+      lines.push("");
     }
 
-    lines.push("");
-    lines.push("※ 이 재구성은 사건의 정식 진상이나 정사를 확정하지 않습니다.");
+    lines.push("※ 이 기록은 캐릭터의 시작점이며 엔딩을 결정하지 않습니다.");
     return lines.join("\n");
   }
 
@@ -617,15 +545,25 @@
       els.copy.textContent = "복사됨";
     }
     window.setTimeout(() => {
-      els.copy.textContent = "보고서 복사";
+      els.copy.textContent = "캐릭터 시트 복사";
     }, 1500);
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
   function persist() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify([...state.selected]));
+      localStorage.setItem(IDENTITY_KEY, JSON.stringify(identity));
     } catch {
-      // Storage is optional; the CYOA still works without it.
+      // Local storage is optional.
     }
   }
 
@@ -634,17 +572,41 @@
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
       if (Array.isArray(saved)) {
         saved.filter(id => choiceMap.has(id)).forEach(id => state.selected.add(id));
-        sanitizeSelections();
       }
+
+      const savedIdentity = JSON.parse(localStorage.getItem(IDENTITY_KEY) || "{}");
+      identity.name = savedIdentity.name || "";
+      identity.codename = savedIdentity.codename || "";
+      identity.age = savedIdentity.age || "";
+      els.name.value = identity.name;
+      els.codename.value = identity.codename;
+      els.age.value = identity.age;
+      sanitizeSelections();
     } catch {
       state.selected.clear();
     }
   }
 
+  function syncIdentity() {
+    identity.name = els.name.value.trim();
+    identity.codename = els.codename.value.trim();
+    identity.age = els.age.value.trim();
+    persist();
+    renderIdentity();
+    renderResult();
+  }
+
   function resetAll() {
     state.selected.clear();
+    identity.name = "";
+    identity.codename = "";
+    identity.age = "";
+    els.name.value = "";
+    els.codename.value = "";
+    els.age.value = "";
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(IDENTITY_KEY);
     } catch {
       // Ignore storage failures.
     }
@@ -659,6 +621,9 @@
     renderResult();
   }
 
+  [els.name, els.codename, els.age].forEach(input => {
+    input.addEventListener("input", syncIdentity);
+  });
   document.querySelector("#reset-top").addEventListener("click", resetAll);
   document.querySelector("#reset-side").addEventListener("click", resetAll);
   document.querySelector("#copy-report").addEventListener("click", copyReport);
