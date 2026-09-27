@@ -10,19 +10,19 @@ const index = characters.findIndex((_, position) => recordId(position) === reque
 const profile = document.querySelector("#profile");
 
 if (index < 0) {
-  document.title = "기록 없음 · Raika";
+  document.title = "기록 없음 · 미종결 기록";
   const notice = document.createElement("p");
   notice.className = "empty-record";
   notice.textContent = "존재하지 않는 인물 기록입니다. 상단의 인물 명단에서 다시 선택해 주세요.";
   profile.replaceWith(notice);
-  document.querySelector("footer p").textContent = "RAIKA / RECORD NOT FOUND";
+  document.querySelector("footer p").textContent = "ERAC / RECORD NOT FOUND";
 } else {
   const name = characters[index];
-  document.title = name + " · Raika";
+  document.title = name + " · 미종결 기록";
   document.querySelector(".intro .eyebrow").textContent = "PERSONNEL FILE / " + requested + " — 15";
   document.querySelector(".character-name").textContent = name;
   document.querySelector(".record-fields dd").textContent = name;
-  document.querySelector("footer p").textContent = "RAIKA / " + requested;
+  document.querySelector("footer p").textContent = "ERAC / PERSONNEL " + requested;
 
   for (const [selector, offset, label] of [
     ["#previous-character", -1, "이전 인물"],

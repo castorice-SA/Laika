@@ -259,6 +259,12 @@ footer {
   letter-spacing: 0.12em;
 }
 
+.document-heading .story-title {
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  letter-spacing: 0.025em;
+  line-height: 1.3;
+}
+
 .document-stamp span {
   font: 0.6rem ui-monospace, monospace;
   letter-spacing: 0.06em;
@@ -362,6 +368,15 @@ footer {
   font-weight: 800;
   letter-spacing: 0.24em;
   text-decoration: none;
+}
+
+.brand-subtitle {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
 }
 
 .status {
