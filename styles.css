@@ -287,3 +287,39 @@ footer p { margin: 0; font: .62rem/1.6 var(--mono); letter-spacing: .1em; color:
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
 }
+
+
+/* Entry routes: personnel dossier + unresolved-record CYOA */
+.access-actions {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.access-actions .access-button {
+  width: 14.6rem;
+}
+.access-button-secondary {
+  border-color: #68768c;
+  background: linear-gradient(115deg, #293441, #232732 80%);
+  color: #dce5ef;
+}
+.access-button-secondary .access-caption {
+  color: #aebccd;
+}
+.access-button-secondary:hover {
+  border-color: #91a0b5;
+  background: linear-gradient(115deg, #344353, #2d313e);
+}
+@media (max-width: 780px) {
+  .document-access {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .access-actions {
+    width: 100%;
+  }
+  .access-actions .access-button {
+    width: 100%;
+  }
+}
